@@ -32,6 +32,10 @@ class Bicycle(object):
         # Simulate a time step guetting the parameters
         # v is the velocity in this step and alpha is the angle of the front
         # axis in degrees
+        if(alpha > alpha_max):   #limits the steer angle to the fisical limit
+            alpha = alpha_max
+        if(alpha < -alpha_max):
+            alpha = -alpha_max
         delta_x = v*math.cos(math.radians(self.theta))
         delta_y = v*math.sin(math.radians(self.theta))
         delta_theta = (v/self.L)*math.tan(math.radians(alpha))
