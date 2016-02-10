@@ -6,7 +6,7 @@ import bicycle
 class Vehicle(bicycle.Bicycle):
     """The Vehicle is based on the Bicycle class, the diferece is the it has
         sensors em methods for odometry"""
-    def __init__(self,L,alpha_max):
+    def __init__(self, L = 1 ,alpha_max = 90):
         bicycle.Bicycle.__init__(self,L,alpha_max)
         self.odoState = False   #turn of odometry
         self.odoVariance = 0    #set the standard deviantion of the odometry to
@@ -31,7 +31,8 @@ class Vehicle(bicycle.Bicycle):
     def run(self, v, alpha):
     # Atualize the run method to read the sensors too
         bicycle.Bicycle.run(self,v,alpha)
-        self.readSensors(v,alpha)
+        if(self.odoState):
+            self.readSensors(v,alpha)
     def clear(self):
     # clear both the positions of the model and the sensors reads
         bicycle.Bicycle.clear()

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 class Bicycle(object):
     """docstring for """
-    def __init__(self, L,alpha_max):
+    def __init__(self, L =1 ,alpha_max = 90):
         # inicialize bicycle model
         self.L = L                      # L is the length between the wheels
         self.alpha_max = alpha_max      # alpha_max is the maximal angle of the
@@ -45,6 +45,7 @@ class Bicycle(object):
         self.plot = plt.figure()
         plt.plot(self.poses[0],self.poses[1])
         self.plot.show()
+
     def sim_RandomPath(self,v,steps):
         # Simulate a model with random alpha in it time steps
         # v is the contant speed of the model and steps is the num of
