@@ -32,14 +32,19 @@ class Bicycle(object):
         # Simulate a time step guetting the parameters
         # v is the velocity in this step and alpha is the angle of the front
         # axis in degrees
+        if(alpha > self.alpha_max):   #limits the steer angle to the fisical limit
+            alpha = self.alpha_max
+        if(alpha < -self.alpha_max):
+            alpha = -self.alpha_max
         delta_x = v*math.cos(math.radians(self.theta))
         delta_y = v*math.sin(math.radians(self.theta))
         delta_theta = (v/self.L)*math.tan(math.radians(alpha))
         self.Update(delta_x,delta_y,delta_theta)
     def show(self):
         # Plot the path of the model
-        plt.plot(rob.poses[0],rob.poses[1])
-        plt.show()
+        self.plot = plt.figure()
+        plt.plot(self.poses[0],self.poses[1])
+        self.plot.show()
     def sim_RandomPath(self,v,steps):
         # Simulate a model with random alpha in it time steps
         # v is the contant speed of the model and steps is the num of
@@ -47,5 +52,10 @@ class Bicycle(object):
         for i in xrange(steps):
             alpha = random.gauss(0,self.alpha_max)
             self.run(v,alpha)
+    def sim_Path(self,v,alpha):
+        # Simulate the path of the model using a list of speeds and angles,
+        # this lists should have the same length
+        for i in xrange(len(v)):
+            self.run(v[i],alpha[i])
     def __str__(self):
         return str(self.poses)
