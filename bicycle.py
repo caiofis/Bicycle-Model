@@ -47,6 +47,10 @@ class Bicycle(object):
         for i in xrange(steps):
             alpha = random.gauss(0,self.alpha_max)
             self.run(v,alpha)
+    def sim_Path(self,v,alpha):
+        # Simulate the path of the model using a list of speeds and angles,
+        # this lists should have the same length
+        for i in xrange(len(v)):
+            self.run(v[i],alpha[i])
     def __str__(self):
         return str(self.poses)
-
