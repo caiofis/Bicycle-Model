@@ -23,6 +23,6 @@ robot2 = vehicle.Vehicle()              #create a second model
 robot2.sim_Path(speed,angle)            #run it in the path read by odometry
 
 #show the paths
-robot.show()
-robot2.show()
+robot.show("Real")
+robot2.show("Odometry")
 plt.show()

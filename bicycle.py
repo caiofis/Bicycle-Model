@@ -40,9 +40,10 @@ class Bicycle(object):
         delta_y = v*math.sin(math.radians(self.theta))
         delta_theta = (v/self.L)*math.tan(math.radians(alpha))
         self.Update(delta_x,delta_y,delta_theta)
-    def show(self):
+    def show(self,legend = "Path"):
         # Plot the path of the model
-        plt.plot(self.poses[0],self.poses[1])
+        plt.plot(self.poses[0],self.poses[1],label = legend)
+        plt.legend()
         plt.draw()
 
     def sim_RandomPath(self,v,steps):
