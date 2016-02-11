@@ -51,7 +51,7 @@ class Bicycle(object):
         # v is the contant speed of the model and steps is the num of
         # interations of the simulation
         for i in xrange(steps):
-            alpha = random.gauss(0,self.alpha_max)
+            alpha = random.uniform(-self.alpha_max,self.alpha_max)
             self.run(v,alpha)
     def sim_Path(self,v,alpha):
         # Simulate the path of the model using a list of speeds and angles,
