@@ -42,9 +42,8 @@ class Bicycle(object):
         self.Update(delta_x,delta_y,delta_theta)
     def show(self):
         # Plot the path of the model
-        self.plot = plt.figure()
         plt.plot(self.poses[0],self.poses[1])
-        self.plot.show()
+        plt.draw()
 
     def sim_RandomPath(self,v,steps):
         # Simulate a model with random alpha in it time steps
