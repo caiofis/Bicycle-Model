@@ -13,9 +13,9 @@ class Camera(object):
         #Define the position of the first pixel
         startx =  pose[0]+(self.L/2)*math.cos(math.radians(pose[2]+90))
         starty =  pose[1]+(self.L/2)*math.sin(math.radians(pose[2]+90))
-        x = []
-        y = []
-        reads = []
+        x = []      #list of x positions of the pixels
+        y = []      #list of y positions of the pixels
+        reads = []  #value of the pixels
 
         for i in xrange(self.L):    #run over the line pixel by pixel
             x.append(int(startx+i*math.cos(math.radians(pose[2]-90))))
