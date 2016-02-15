@@ -3,7 +3,18 @@ import random
 import matplotlib.pyplot as plt
 
 class Bicycle(object):
-    """docstring for """
+    """Implementation of the famous bibycle "model"
+        - Methods:
+            -init: inicialize the model, getting L = distance between the wheels
+                    and the maximun steer angle
+            -clear: Clear the list of poses
+            -setPose: define a new pose to the model
+            -run: calculate the next pose of the model getting the speed and the
+                    steer angle
+            -sim_RandomPath: simulate the model with const speed and random
+                    steer angle
+            -sim_Path: simulate the model getting a list of speeds and steer
+                    angles"""
     def __init__(self, L =1 ,alpha_max = 90):
         # inicialize bicycle model
         self.L = L                      # L is the length between the wheels
@@ -15,6 +26,8 @@ class Bicycle(object):
     def clear(self):
         #clear the list of poses
         self.poses = [[],[],[]]
+    def getPose(self):
+        return self.poses[0][-1],self.poses[1][-1],self.poses[2][-1]
     def setPose(self,x,y,theta):
         #define a position
         self.x = x
