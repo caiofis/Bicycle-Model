@@ -1,3 +1,4 @@
+
 import numpy as np
 import random
 import matplotlib.pyplot as plt
@@ -14,6 +15,7 @@ for i in x:
 
 #plot the results
 plt.axis([0, 100, 0, 6])
+print voltimeter.states
 plt.plot(x,z,label = "Measurements")
 plt.plot(x,voltimeter.states,label = "Kalman filtered")
 plt.show()
