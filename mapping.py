@@ -8,14 +8,15 @@ class Map(object):
     represented as a numpy array"""
     def __init__(self,file):
         """ Create the map based in the image file"""
-        self.pixels = np.asarray(Image.open(file).convert("L"))
+        self.pixels = np.asarray(Image.open(file).convert("L").transpose(Image.FLIP_TOP_BOTTOM))
     def show(self):
         """Plot the image as a b&w plot"""
         plt.imshow(self.pixels)#, interpolation='nearest')
+        plt.axis([0,self.pixels[0].size,0,self.pixels.size/self.pixels[0].size])
         plt.gray()
         plt.draw()
     def read(self,x,y):
-        return self.pixels[x][y]
+        return self.pixels[y][x]
     def getMap(self):
         return self.pixels
 

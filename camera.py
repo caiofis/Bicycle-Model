@@ -28,7 +28,8 @@ class Camera(object):
 cam = Camera()
 mapa = mapping.Map("Maps/mapa.png")
 cam.loadMap(mapa)
-print cam.readLine((100,95,90))
+print mapa.pixels[400]
+print cam.readLine((400,360,120))
 cam.map.show()
 
 plt.show()
