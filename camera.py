@@ -1,10 +1,12 @@
 import mapping
 import matplotlib.pyplot as plt
 import math
+
 class Camera(object):
     """Simulate a camera used to read the map"""
     def __init__(self, L = 60):
         self.L = L          #The length of the camera image (pixels)
+        self.error = 0
     def loadMap(self,map):
         self.map = map
 
@@ -24,12 +26,34 @@ class Camera(object):
         plt.plot(x,y)
         plt.draw()
         return reads
+    def findLine(self,pose):
+        """Find de centroid of the black points in the image, this is the center
+            of the line by definition, and compare with the center of the camera
+            length"""
+        address = 0         #Store the address of the black points
+        num = 0             #Store the number of black points find
+        read = self.readLine(pose)  #read the line from the pose of the model
+        for i in xrange(self.L-1):  #run over the read array
+            if (read[i] < 150):     #if the pixel value < 150 it is black
+                address += i
+                num += 1
 
+        #determine the dif between the center fo the camera and the centroid
+        #of the black pixels
+        # If the line is by the rigth of the center the error is negative
+        if(num<1):
+            self.error = 0
+        else:
+            centroid = address/num      #find the centroid of the black pixels
+            self.error=(self.L/2)-centroid
+        return self.error
+    
 cam = Camera()
-mapa = mapping.Map("Maps/mapa.png")
+mapa = mapping.Map("Maps/mapa2.jpg")
 cam.loadMap(mapa)
-print mapa.pixels[400]
-print cam.readLine((400,360,120))
+pose = (540,400,90)
+print cam.readLine(pose)
+print cam.findPath(pose)
 cam.map.show()
 
 plt.show()
