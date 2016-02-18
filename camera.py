@@ -47,13 +47,18 @@ class Camera(object):
             centroid = address/num      #find the centroid of the black pixels
             self.error=(self.L/2)-centroid
         return self.error
-    
-cam = Camera()
-mapa = mapping.Map("Maps/mapa2.jpg")
-cam.loadMap(mapa)
-pose = (540,400,90)
-print cam.readLine(pose)
-print cam.findPath(pose)
-cam.map.show()
-
-plt.show()
+    def findPath(self,pose):
+        address = 0         #Store the address of the black points
+        read = self.readLine(pose)  #read the line from the pose of the model
+        for i in xrange(self.L/2,0,-1):
+            if(read[i]<150):
+                address = i
+                break
+        for i in xrange(self.L/2,self.L-1,1):
+            a = 0
+            if(read[i]<150):
+                address += i
+                break
+        centroid = address/2
+        self.error = (self.L/2)-centroid
+        return self.error
