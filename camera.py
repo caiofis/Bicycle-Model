@@ -27,13 +27,13 @@ class Camera(object):
             plt.plot(x,y)
             plt.draw()
         return reads
-    def findLine(self,pose):
+    def findLine(self,pose,visualize = False):
         """Find de centroid of the black points in the image, this is the center
             of the line by definition, and compare with the center of the camera
             length"""
         address = 0         #Store the address of the black points
         num = 0             #Store the number of black points find
-        read = self.readLine(pose)  #read the line from the pose of the model
+        read = self.readLine(pose,visualize)  #read the line from the pose of the model
         for i in xrange(self.L-1):  #run over the read array
             if (read[i] < 150):     #if the pixel value < 150 it is black
                 address += i
