@@ -33,6 +33,9 @@ class Bicycle(object):
         self.x = x
         self.y = y
         self.theta = theta
+        self.poses[0].append(x)
+        self.poses[1].append(y)
+        self.poses[2].append(theta)
     def Update(self,x,y,theta):
         #aplly the deltas to the pose and add pose to the list
         self.x += x

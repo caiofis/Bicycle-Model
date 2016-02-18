@@ -10,7 +10,7 @@ class Camera(object):
     def loadMap(self,map):
         self.map = map
 
-    def readLine(self,pose):
+    def readLine(self,pose,visualize = False):
         """ Read a line on the map"""
         #Define the position of the first pixel
         startx =  pose[0]+(self.L/2)*math.cos(math.radians(pose[2]+90))
@@ -23,8 +23,9 @@ class Camera(object):
             x.append(int(startx+i*math.cos(math.radians(pose[2]-90))))
             y.append(int(starty+i*math.sin(math.radians(pose[2]-90))))
             reads.append(self.map.read(x[-1],y[-1]))
-        plt.plot(x,y)
-        plt.draw()
+        if visualize:
+            plt.plot(x,y)
+            plt.draw()
         return reads
     def findLine(self,pose):
         """Find de centroid of the black points in the image, this is the center
@@ -42,7 +43,7 @@ class Camera(object):
         #of the black pixels
         # If the line is by the rigth of the center the error is negative
         if(num<1):
-            self.error = 0
+            self.error = self.error
         else:
             centroid = address/num      #find the centroid of the black pixels
             self.error=(self.L/2)-centroid
