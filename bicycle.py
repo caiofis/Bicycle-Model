@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 class Bicycle(object):
     """Implementation of the famous bibycle "model"
+    ***** USE METTERS TO THE L AND THE V ******
         - Methods:
             -init: inicialize the model, getting L = distance between the wheels
                     and the maximun steer angle
