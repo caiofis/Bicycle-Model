@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 class Bicycle(object):
     """Implementation of the famous bibycle "model"
+    ***** USE METTERS TO THE L AND THE V ******
         - Methods:
             -init: inicialize the model, getting L = distance between the wheels
                     and the maximun steer angle
@@ -33,6 +34,9 @@ class Bicycle(object):
         self.x = x
         self.y = y
         self.theta = theta
+        self.poses[0].append(x)
+        self.poses[1].append(y)
+        self.poses[2].append(theta)
     def Update(self,x,y,theta):
         #aplly the deltas to the pose and add pose to the list
         self.x += x

@@ -26,3 +26,4 @@ robot2.sim_Path(speed,angle)            #run it in the path read by odometry
 robot.show("Real")
 robot2.show("Odometry")
 plt.show()
+print robot.getPose()
