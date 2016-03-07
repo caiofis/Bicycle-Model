@@ -47,7 +47,7 @@ class Camera(object):
         else:
             centroid = address/num      #find the centroid of the black pixels
             self.error=(self.L/2)-centroid
-        return self.error#/self.L/2
+        return self.error/float(self.L/2)
     def findPath(self,pose):
         address = 0         #Store the address of the black points
         read = self.readLine(pose)  #read the line from the pose of the model
