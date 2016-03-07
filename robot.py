@@ -18,8 +18,11 @@ class Robot(vehicle.Vehicle):
         self.last_error = 0                             #last error (error[k-1])
         self.int_error = 0                              #integral of the error
 
-    def run(self,v,alpha):
-        '''Sobrepose the run method applying the pixels per meter paramater'''
+    def run(self,v,value):
+        '''Sobrepose the run method applying the pixels per meter paramater and
+        to scale the angle as a value from -1 to 1'''
+        ###Value must be between -1 and 1
+        alpha = value*self.alpha_max  #scale the value to the steer angle
         if(alpha > self.alpha_max):   #limits the steer angle to the fisical limit
             alpha = self.alpha_max
         if(alpha < -self.alpha_max):
@@ -29,9 +32,10 @@ class Robot(vehicle.Vehicle):
         delta_y = v*math.sin(math.radians(self.theta))*self.pxlpermeter
         self.Update(delta_x,delta_y,delta_theta)
     def show(self):
+        """Show the image of the map and the poses of the robot"""
         self.map.show()
         vehicle.Vehicle.show(self)
-    def pidControl(self,Kp = 2,Ki = 0, Kd = 0,v = 1):
+    def pidControl(self,Kp = 2,Ki = 0, Kd = 0,v = 1,debug=False):
         """Aplly the PID control to the model"""
         error = self.cam.findLine(self.getPose(),visualize=False)
         self.int_error += error
@@ -39,6 +43,8 @@ class Robot(vehicle.Vehicle):
         last_error = error
         alpha = Kp * error + Ki * self.int_error + Kd * delta_error
         self.run(v,alpha)
-    def sim_LineFollower(self,Kp = 2, Ki = 0, Kd = 0, v =5, Steps = 500):
+        if debug:
+            print error,alpha
+    def sim_LineFollower(self,Kp = 2, Ki = 0, Kd = 0, v =5, Steps = 500,debug=False):
         for i in xrange(Steps):
-            self.pidControl(Kp,Ki,Kd,v)
+            self.pidControl(Kp,Ki,Kd,v,debug)
