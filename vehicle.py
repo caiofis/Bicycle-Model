@@ -25,14 +25,16 @@ class Vehicle(bicycle.Bicycle):
         v += random.gauss(0,self.odoVariance) # append the noise to the odometer
         self.sensors[0].append(v)
         self.sensors[1].append(alpha)
-    def Odometry(self):
+    def Odometry(self,v,alpha):
+        if(self.odoState):
+            self.readSensors(v,alpha)
+    def readOdometry(self):
         # return the list of sensors reads of the encoder and the steer angle
         return self.sensors[0],self.sensors[1]
     def run(self, v, alpha):
     # Atualize the run method to read the sensors too
         bicycle.Bicycle.run(self,v,alpha)
-        if(self.odoState):
-            self.readSensors(v,alpha)
+        self.Odometry(v,alpha)
     def clear(self):
     # clear both the positions of the model and the sensors reads
         bicycle.Bicycle.clear()

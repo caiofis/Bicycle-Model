@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import math
+import bicycle
 import vehicle
 import camera
 import mapping
@@ -22,19 +23,14 @@ class Robot(vehicle.Vehicle):
         '''Sobrepose the run method applying the pixels per meter paramater and
         to scale the angle as a value from -1 to 1'''
         ###Value must be between -1 and 1
+        self.Odometry(v,value)        #Reads the odometry sensors
         alpha = value*self.alpha_max  #scale the value to the steer angle
-        if(alpha > self.alpha_max):   #limits the steer angle to the fisical limit
-            alpha = self.alpha_max
-        if(alpha < -self.alpha_max):
-            alpha = -self.alpha_max
-        delta_theta = (v*self.pxlpermeter/self.L)*math.tan(math.radians(alpha))
-        delta_x = v*math.cos(math.radians(self.theta))*self.pxlpermeter
-        delta_y = v*math.sin(math.radians(self.theta))*self.pxlpermeter
-        self.Update(delta_x,delta_y,delta_theta)
-    def show(self):
+        v = v*self.pxlpermeter
+        bicycle.Bicycle.run(self,v,alpha)
+    def show(self,legend = "Path"):
         """Show the image of the map and the poses of the robot"""
         self.map.show()
-        vehicle.Vehicle.show(self)
+        bicycle.Bicycle.show(self,legend)
     def pidControl(self,Kp = 2,Ki = 0, Kd = 0,v = 1,debug=False):
         """Aplly the PID control to the model"""
         error = self.cam.findLine(self.getPose(),visualize=False)
