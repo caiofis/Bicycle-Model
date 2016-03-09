@@ -4,20 +4,13 @@ import matplotlib.pyplot as plt
 
 class Bicycle(object):
     """Implementation of the famous bibycle "model"
-    ***** USE METTERS TO THE L AND THE V ******
-        - Methods:
-            -init: inicialize the model, getting L = distance between the wheels
-                    and the maximun steer angle
-            -clear: Clear the list of poses
-            -setPose: define a new pose to the model
-            -run: calculate the next pose of the model getting the speed and the
-                    steer angle
-            -sim_RandomPath: simulate the model with const speed and random
-                    steer angle
-            -sim_Path: simulate the model getting a list of speeds and steer
-                    angles"""
+
+    Inicialize the model, getting **L** = distance between the wheels and
+    **alpha_max** = maximun steer angle
+
+    **The distances must be ALLWAYS in meters**"""
+
     def __init__(self, L =1 ,alpha_max = 90):
-        # inicialize bicycle model
         self.L = L                      # L is the length between the wheels
         self.alpha_max = alpha_max      # alpha_max is the maximal angle of the
         self.x = 0                      # front axis
@@ -25,12 +18,13 @@ class Bicycle(object):
         self.theta = 0                  # (0,0,0) and the pose is (x,y,theta)
         self.poses = [[],[],[]]         # list od the poses of the model
     def clear(self):
-        #clear the list of poses
+        """Clear the list of poses"""
         self.poses = [[],[],[]]
     def getPose(self):
+        """Return que actual pose of the model. The pose is in (x,y,theta) form"""
         return self.poses[0][-1],self.poses[1][-1],self.poses[2][-1]
     def setPose(self,x,y,theta):
-        #define a position
+        """Define a new pose to the model"""
         self.x = x
         self.y = y
         self.theta = theta
@@ -38,7 +32,7 @@ class Bicycle(object):
         self.poses[1].append(y)
         self.poses[2].append(theta)
     def Update(self,x,y,theta):
-        #aplly the deltas to the pose and add pose to the list
+        """Change the pose of the model adding the parameters to the actual pose"""
         self.x += x
         self.y += y
         self.theta += theta
@@ -46,9 +40,8 @@ class Bicycle(object):
         self.poses[1].append(self.y)
         self.poses[2].append(self.theta)
     def run(self,v,alpha):
-        # Simulate a time step guetting the parameters
-        # v is the velocity in this step and alpha is the angle of the front
-        # axis in degrees
+        """Calculate the next pose of the model getting the speed (distance travaled
+        in this step time) and the steer angle"""
         if(alpha > self.alpha_max):   #limits the steer angle to the fisical limit
             alpha = self.alpha_max
         if(alpha < -self.alpha_max):
@@ -58,21 +51,19 @@ class Bicycle(object):
         delta_theta = (v/self.L)*math.tan(math.radians(alpha))
         self.Update(delta_x,delta_y,delta_theta)
     def show(self,legend = "Path"):
-        # Plot the path of the model
+        """Plot the path of the model"""
         plt.plot(self.poses[0],self.poses[1],label = legend)
         plt.legend()
         plt.draw()
-
     def sim_RandomPath(self,v,steps):
-        # Simulate a model with random alpha in it time steps
-        # v is the contant speed of the model and steps is the num of
-        # interations of the simulation
+        """Simulate the model running with const speed (v in meters per step)
+         and random steer angle for a number of steps"""
         for i in xrange(steps):
             alpha = random.uniform(-self.alpha_max,self.alpha_max)
             self.run(v,alpha)
     def sim_Path(self,v,alpha):
-        # Simulate the path of the model using a list of speeds and angles,
-        # this lists should have the same length
+        """Simulate the path of the model using a list of speeds and angles,
+        this lists should have the same length"""
         for i in xrange(len(v)):
             self.run(v[i],alpha[i])
     def __str__(self):

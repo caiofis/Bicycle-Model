@@ -15,27 +15,29 @@ class Vehicle(bicycle.Bicycle):
                                 # sensors[0] = encoder
                                 # sensors[1] = steer angle
     def setOdometry(self,state):
-    # turn on or off the odometry
+        """Turn on or off the odometry"""
         self.odoState = state
     def setOdometryVariance(self, variance):
-    # Set the valor of the standard deviantion of the odometry
+        """Set the valor of the standard deviantion of the odometry"""
         self.odoVariance = variance
     def readSensors(self,v,alpha):
-    # append to the list the encoder read
+        """Append to the list the reads of the sensors (encoder and steer angle
+    measurement)"""
         v += random.gauss(0,self.odoVariance) # append the noise to the odometer
         self.sensors[0].append(v)
         self.sensors[1].append(alpha)
     def Odometry(self,v,alpha):
+        """Make the read of the sensors if the odometry is set"""
         if(self.odoState):
             self.readSensors(v,alpha)
     def readOdometry(self):
-        # return the list of sensors reads of the encoder and the steer angle
+        """Return the list of sensors reads of the encoder and the steer angles"""
         return self.sensors[0],self.sensors[1]
     def run(self, v, alpha):
-    # Atualize the run method to read the sensors too
+        """Calculate the next pose of the model and read the sensors"""
         bicycle.Bicycle.run(self,v,alpha)
         self.Odometry(v,alpha)
     def clear(self):
-    # clear both the positions of the model and the sensors reads
+        """Clear both the poses of the model and the sensors reads"""
         bicycle.Bicycle.clear()
         self.sensors = [[],[]]  # clear list of the sensors

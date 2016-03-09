@@ -3,15 +3,18 @@ import matplotlib.pyplot as plt
 import math
 
 class Camera(object):
-    """Simulate a camera used to read the map"""
+    """Simulate a line scan camera used to read the map
+
+    **L** is length of the camera image in pixels"""
     def __init__(self, L = 60):
         self.L = L          #The length of the camera image (pixels)
         self.error = 0
     def loadMap(self,map):
+        """Load a Map object into the camera"""
         self.map = map
 
     def readLine(self,pose,visualize = False):
-        """ Read a line on the map"""
+        """Reads a line of the map based on the pose of the robot"""
         #Define the position of the first pixel
         startx =  pose[0]+(self.L/2)*math.cos(math.radians(pose[2]+90))
         starty =  pose[1]+(self.L/2)*math.sin(math.radians(pose[2]+90))
@@ -28,9 +31,13 @@ class Camera(object):
             plt.draw()
         return reads
     def findLine(self,pose,visualize = False):
-        """Find de centroid of the black points in the image, this is the center
-            of the line by definition, and compare with the center of the camera
-            length"""
+        """ Finds the center of a black line in the image read by the models pose
+        and return the diference from it to the center of the camera in a range
+        from -1 to 1
+
+        - If no line is found its return the last error
+
+        - Find de centroid of the black points in the image, this is the center of the line by definition, and compare with the center of the camera length"""
         address = 0         #Store the address of the black points
         num = 0             #Store the number of black points find
         read = self.readLine(pose,visualize)  #read the line from the pose of the model

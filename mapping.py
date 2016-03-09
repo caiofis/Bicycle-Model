@@ -7,7 +7,6 @@ class Map(object):
     image of its map, the image is converted to a black and white image and then
     represented as a numpy array"""
     def __init__(self,file):
-        """ Create the map based in the image file"""
         self.pixels = np.asarray(Image.open(file).convert("L").transpose(Image.FLIP_TOP_BOTTOM))
     def show(self):
         """Plot the image as a b&w plot"""
@@ -16,13 +15,8 @@ class Map(object):
         plt.gray()
         plt.draw()
     def read(self,x,y):
+        """Read the value of the pixel in the desired position"""
         return self.pixels[y][x]
     def getMap(self):
+        """Return the numpy array thats represent the map"""
         return self.pixels
-
-
-
-# mapa = Map("Maps/mapa.bmp")
-#
-# mapa.show()
-# plt.show()

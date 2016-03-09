@@ -1,0 +1,7 @@
+Documentation:
+====================
+This section shows a rich detailed documentation about every class and method of
+the code.
+Bicycle
+--------
+Autogenered docs
