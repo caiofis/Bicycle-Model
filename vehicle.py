@@ -15,7 +15,9 @@ class Vehicle(bicycle.Bicycle):
                                 # sensors[0] = encoder
                                 # sensors[1] = steer angle
     def setOdometry(self,state):
-        """Turn on or off the odometry"""
+        """Turn on or off the odometry, the odometry reads the speed of the model
+        and adds a gaussian noise to it, the standard deviantion of this noise
+        must be set"""
         self.odoState = state
     def setOdometryVariance(self, variance):
         """Set the valor of the standard deviantion of the odometry"""
