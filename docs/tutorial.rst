@@ -27,7 +27,7 @@ uses a random function.
 
 .. figure::  images/random.png
  :align:   center
- 
+
  Random path
 
 Odometry Simulator
@@ -49,9 +49,9 @@ measurements. ::
   import vehicle                          #import the vehicle model
   import matplotlib.pyplot as plt         #import matplotlib
 
-  robot = vehicle.Vehicle(1,50)           #create a robot
-  robot.setOdometry(True)                 #set the odometer on
-  robot.setOdometryVariance(0.4)          #configure its deviantion to 0.4
+  car = vehicle.Vehicle(1,50)             #create a robot
+  car.setOdometry(True)                   #set the odometer on
+  car.setOdometryVariance(0.4)            #configure its deviantion to 0.4
   speed,angle = [],[]                     #initialize the lists
 
   for a in xrange(4):                     #create a retangular path
@@ -59,17 +59,17 @@ measurements. ::
         angle.append(0)
       for i in xrange(107):
         angle.append(40)
-  for i in xrange(len(angle)):        #set the speed to a constant along the path
+  for i in xrange(len(angle)):            #set the speed to a constant along the path
     speed.append(1)
 
-  robot.sim_Path(speed,angle)             #run in a rectangular path
-  speed , angle =  robot.readOdometry()   #reads the sensors
-  robot2 = vehicle.Vehicle()              #create a second model
-  robot2.sim_Path(speed,angle)            #run it in the path read by odometry
+  car.sim_Path(speed,angle)               #run in a rectangular path
+  speed , angle =  car.readOdometry()     #reads the sensors
+  car2 = vehicle.Vehicle()                #create a second model
+  car2.sim_Path(speed,angle)              #run it in the path read by odometry
 
   #show the paths
   robot.show("Real")
-  robot2.show("Odometry")
+  car2.show("Odometry")
   plt.show()
 
 .. figure::  images/odometry.png
@@ -79,3 +79,37 @@ measurements. ::
 
 PID Control Simulator
 ---------------------
+This example implement all the simulator's features, its use the **robot class**
+its load a image file thats represents the "road map" image and run over it
+autonomously following the black line.
+The **camera class** is responsible to sense the environment taking
+a "slice" of the image and finding the center of the black line on it, if no black
+line was found at all it return the last error.
+
+A PID control keep the robot on the path, it apply a steer angle to the model based
+on the error value get from the camera. The error and the PID result is in a range
+from -1 to 1 and it is scale to the maximum steer angle.
+
+The robot class need a relation of pixels per meter to scale the map image, in
+this case its used the default value(375 pxl/meter). The speed of the robot is
+5mm or 1.875 pixels per step. ::
+
+  import robot                          #import the model
+  import matplotlib.pyplot as plt
+
+  robot = robot.Robot("Maps/mapao.png") #inicialize the robot in the map
+  robot.setPose(400,400,0)              #set a initial pose
+  robot.sim_LineFollower(Steps = 1600,Kp=1,Ki = 0,Kd=0.3,v=0.005,debug=True)
+
+  rob.show()  #plot the results
+  plt.show()  #hold the plot
+
+In this case the **debug** parameter is True, so the program will print all the
+errors and the commands from the PID controller. You should get better results,
+with the robot keeping more closer to the black line, with others gains
+values in the controller.
+
+.. figure::   images/pid.png
+  :align:     center
+
+  Line-Follower robot
