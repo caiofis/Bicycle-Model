@@ -18,7 +18,7 @@ for i in xrange(len(angle)):        #set the speed to a constant along the path
     speed.append(1)
 
 robot.sim_Path(speed,angle)             #run in a rectangular path
-speed , angle =  robot.Odometry()       #reads the sensors
+speed , angle =  robot.readOdometry()       #reads the sensors
 robot2 = vehicle.Vehicle()              #create a second model
 robot2.sim_Path(speed,angle)            #run it in the path read by odometry
 

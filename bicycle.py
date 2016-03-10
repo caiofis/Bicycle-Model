@@ -31,7 +31,7 @@ class Bicycle(object):
         self.poses[0].append(x)
         self.poses[1].append(y)
         self.poses[2].append(theta)
-    def Update(self,x,y,theta):
+    def update(self,x,y,theta):
         """Change the pose of the model adding the parameters to the actual pose"""
         self.x += x
         self.y += y
@@ -49,7 +49,7 @@ class Bicycle(object):
         delta_x = v*math.cos(math.radians(self.theta))
         delta_y = v*math.sin(math.radians(self.theta))
         delta_theta = (v/self.L)*math.tan(math.radians(alpha))
-        self.Update(delta_x,delta_y,delta_theta)
+        self.update(delta_x,delta_y,delta_theta)
     def show(self,legend = "Path"):
         """Plot the path of the model"""
         plt.plot(self.poses[0],self.poses[1],label = legend)
