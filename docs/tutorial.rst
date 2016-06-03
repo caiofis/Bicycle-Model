@@ -86,7 +86,15 @@ The **camera class** is responsible to sense the environment taking
 a "slice" of the image and finding the center of the black line on it, if no black
 line was found at all it return the last error.
 
-A PID control keep the robot on the path, it apply a steer angle to the model based
+The PID controller is a proportional–integral–derivative controller
+is a control loop feedback mechanism (controller) commonly used in industrial
+control systems. A PID controller continuously calculates an error value as the
+difference between a desired setpoint and a measured process variable. The
+controller attempts to minimize the error over time by adjustment of a control
+variable, such as the position of a control valve, a damper, or the power
+supplied to a heating element, to a new value determined by a weighted sum.
+
+A PID controller keep the robot on the path, it apply a steer angle to the model based
 on the error value get from the camera. The error and the PID result is in a range
 from -1 to 1 and it is scale to the maximum steer angle.
 

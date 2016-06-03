@@ -18,11 +18,8 @@ import os
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-<<<<<<< HEAD
-#sys.path.insert(0, os.path.abspath('-'))
-=======
 #sys.path.insert(0, os.path.abspath('.'))
->>>>>>> 776efc884c3019eaf80cd40d58d616e609f62e73
+
 path = os.path.join(os.path.dirname(__file__), os.pardir)
 sys.path.append(os.path.abspath(path))
 # -- General configuration ------------------------------------------------
