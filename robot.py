@@ -15,12 +15,13 @@ class Robot(vehicle.Vehicle):
     * A relation of pixels per meter to scale the image (**pxlpermeter**)
     * The length of the camera in pixels (**cam_length**)"""
     def __init__(self,map_file, cam_length = 128, L = 0.2 ,alpha_max = 20,
-                                                    pxlpermeter = 370):
+                                pxlpermeter = 370, H = 0.2, cam_angle = 30):
         vehicle.Vehicle.__init__(self,L,alpha_max)      #create a vehicle
         self.pxlpermeter = pxlpermeter                  #scale the plot
         self.map = mapping.Map(map_file)                #create a map
-        self.cam = camera.Camera(cam_length)            #Load the map into the
-        self.cam.loadMap(self.map)                      #robots camera
+        self.H = H*pxlpermeter                          #set the cam heigth
+        self.cam = camera.Camera(self.H,cam_angle,cam_length)#Load the map into
+        self.cam.loadMap(self.map)                      #the robots camera
         self.error = 0                                  #actual error (error[k])
         self.last_error = 0                             #last error (error[k-1])
         self.int_error = 0                              #integral of the error
@@ -38,7 +39,7 @@ class Robot(vehicle.Vehicle):
         """Show the image of the map and the poses of the robot"""
         self.map.show()
         bicycle.Bicycle.show(self,legend)
-    def pidControl(self,Kp = 2,Ki = 0, Kd = 0,v = 1,debug=False):
+    def pidControl(self,Kp = 2,Ki = 0, Kd = 0,v = 1,debug=True):
         """Aplly the PID control to the model"""
         error = self.cam.findLine(self.getPose(),visualize=False)
         self.int_error += error

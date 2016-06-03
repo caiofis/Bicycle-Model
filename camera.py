@@ -6,8 +6,10 @@ class Camera(object):
     """Simulate a line scan camera used to read the map
 
     **L** is length of the camera image in pixels"""
-    def __init__(self, L = 60):
+    def __init__(self, H, cam_angle, L = 60):
         self.L = L          #The length of the camera image (pixels)
+        self.H = H
+        self.cam_angle= cam_angle
         self.error = 0
     def loadMap(self,map):
         """Load a Map object into the camera"""
@@ -15,9 +17,14 @@ class Camera(object):
 
     def readLine(self,pose,visualize = False):
         """Reads a line of the map based on the pose of the robot"""
+        #Define the distance between the robot and the camera readLine
+        d_cam = self.H * math.tan(math.radians(self.cam_angle))
+        print d_cam
         #Define the position of the first pixel
-        startx =  pose[0]+(self.L/2)*math.cos(math.radians(pose[2]+90))
-        starty =  pose[1]+(self.L/2)*math.sin(math.radians(pose[2]+90))
+        startx =  (pose[0] + d_cam*math.cos(math.radians(pose[2]))) + \
+         (self.L/2)*math.cos(math.radians(pose[2]+90))
+        starty =  (pose[1] + d_cam*math.sin(math.radians(pose[2]))) + \
+        (self.L/2)*math.sin(math.radians(pose[2]+90))
         x = []      #list of x positions of the pixels
         y = []      #list of y positions of the pixels
         reads = []  #value of the pixels
