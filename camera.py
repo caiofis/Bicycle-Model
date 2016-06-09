@@ -19,7 +19,6 @@ class Camera(object):
         """Reads a line of the map based on the pose of the robot"""
         #Define the distance between the robot and the camera readLine
         d_cam = self.H * math.tan(math.radians(self.cam_angle))
-        print d_cam
         #Define the position of the first pixel
         startx =  (pose[0] + d_cam*math.cos(math.radians(pose[2]))) + \
          (self.L/2)*math.cos(math.radians(pose[2]+90))
