@@ -31,9 +31,9 @@ class Robot(vehicle.Vehicle):
         to the speed and scalling the angle as a **value** from -1 to 1, because
         the camera reads return a error in this range'''
         ###Value must be between -1 and 1
-        self.Odometry(v,value)        #Reads the odometry sensors
         alpha = value*self.alpha_max  #scale the value to the steer angle
         v = v*self.pxlpermeter
+        self.Odometry(v,alpha)        #Reads the odometry sensors
         bicycle.Bicycle.run(self,v,alpha)
     def show(self,legend = "Path"):
         """Show the image of the map and the poses of the robot"""

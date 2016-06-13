@@ -26,6 +26,7 @@ class Vehicle(bicycle.Bicycle):
         """Append to the list the reads of the sensors (encoder and steer angle
     measurement)"""
         v += random.gauss(0,self.odoVariance) # append the noise to the odometer
+        #alpha += random.gauss(0,0.5)
         self.sensors[0].append(v)
         self.sensors[1].append(alpha)
     def Odometry(self,v,alpha):
@@ -41,5 +42,5 @@ class Vehicle(bicycle.Bicycle):
         self.Odometry(v,alpha)
     def clear(self):
         """Clear both the poses of the model and the sensors reads"""
-        bicycle.Bicycle.clear()
+        self.poses = [[],[],[]]
         self.sensors = [[],[]]  # clear list of the sensors
