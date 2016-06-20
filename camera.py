@@ -20,17 +20,17 @@ class Camera(object):
         #Define the distance between the robot and the camera readLine
         d_cam = self.H * math.tan(math.radians(self.cam_angle))
         #Define the position of the first pixel
-        startx =  (pose[0] + d_cam*math.cos(math.radians(pose[2]))) + \
-         (self.L/2)*math.cos(math.radians(pose[2]+90))
-        starty =  (pose[1] + d_cam*math.sin(math.radians(pose[2]))) + \
-        (self.L/2)*math.sin(math.radians(pose[2]+90))
+        startx =  (pose[0] + d_cam*math.cos((pose[2]))) + \
+         (self.L/2)*math.cos((pose[2]+1.5708))
+        starty =  (pose[1] + d_cam*math.sin((pose[2]))) + \
+        (self.L/2)*math.sin((pose[2]+1.5708))
         x = []      #list of x positions of the pixels
         y = []      #list of y positions of the pixels
         reads = []  #value of the pixels
 
         for i in xrange(self.L):    #run over the line pixel by pixel
-            x.append(int(startx+i*math.cos(math.radians(pose[2]-90))))
-            y.append(int(starty+i*math.sin(math.radians(pose[2]-90))))
+            x.append(int(startx+i*math.cos((pose[2]-1.5708))))
+            y.append(int(starty+i*math.sin((pose[2]-1.5708))))
             reads.append(self.map.read(x[-1],y[-1]))
         if visualize:
             plt.plot(x,y)

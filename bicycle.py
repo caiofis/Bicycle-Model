@@ -48,7 +48,8 @@ class Bicycle(object):
             alpha = -self.alpha_max
         delta_x = v*math.cos(math.radians(self.theta))
         delta_y = v*math.sin(math.radians(self.theta))
-        delta_theta = (v/self.L)*math.tan(math.radians(alpha))
+        delta_theta = math.degrees((v/self.L)*math.tan(math.radians(alpha)))
+        print delta_theta
         self.update(delta_x,delta_y,delta_theta)
     def show(self,legend = "Path"):
         """Plot the path of the model"""

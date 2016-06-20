@@ -41,7 +41,7 @@ class Robot(vehicle.Vehicle):
         bicycle.Bicycle.show(self,legend)
     def pidControl(self,Kp = 2,Ki = 0, Kd = 0,v = 1,debug=True):
         """Aplly the PID control to the model"""
-        error = self.cam.findLine(self.getPose(),visualize=False)
+        error = self.cam.findLine(self.getPose(),visualize=True)
         self.int_error += error
         delta_error = error - self.last_error
         last_error = error
