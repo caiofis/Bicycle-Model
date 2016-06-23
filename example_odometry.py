@@ -6,13 +6,13 @@ import matplotlib.pyplot as plt
 
 robot = vehicle.Vehicle(1,50)           #create a robot
 robot.setOdometry(True)                 #configure its odometer
-robot.setOdometryVariance(0.4)
+robot.setOdometryVariance([0.05,0.3])
 speed,angle = [],[]
 for a in xrange(4):                     #create a retangular path
     for i in xrange(400):
         angle.append(0)
-    for i in xrange(107):
-        angle.append(40)
+    for i in xrange(9):
+        angle.append(10)
 
 for i in xrange(len(angle)):        #set the speed to a constant along the path
     speed.append(1)

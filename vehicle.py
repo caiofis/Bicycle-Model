@@ -11,7 +11,7 @@ class Vehicle(bicycle.Bicycle):
         self.odoState = False   #turn of odometry
         self.odoVariance = [0,0]    #set the standard deviantion of the odometry to
                                 # zero
-        self.sensors = [[],[]]  # inicialize a list of the sensors,
+        self.sensors = [[],[]]  # inicialize a list of the sensors reads,
                                 # sensors[0] = encoder
                                 # sensors[1] = steer angle
     def setOdometry(self,state):
@@ -20,7 +20,8 @@ class Vehicle(bicycle.Bicycle):
         must be set"""
         self.odoState = state
     def setOdometryVariance(self, variance):
-        """Set the valor of the standard deviantion of the odometry"""
+        """Set the valor of the standard deviantion of the odometry
+            It must be a list of two values [encoder,steer]"""
         self.odoVariance = variance
     def readSensors(self,v,alpha):
         """Append to the list the reads of the sensors (encoder and steer angle

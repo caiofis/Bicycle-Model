@@ -16,7 +16,7 @@ class Bicycle(object):
         self.x = 0                      # front axis
         self.y = 0                      # the inicial position of the model is
         self.theta = 0                  # (0,0,0) and the pose is (x,y,theta)
-        self.poses = [[],[],[]]         # list od the poses of the model
+        self.poses = [[],[],[]]         # list old the poses of the model
     def clear(self):
         """Clear the list of poses"""
         self.poses = [[],[],[]]
@@ -49,7 +49,7 @@ class Bicycle(object):
         delta_x = v*math.cos(math.radians(self.theta))
         delta_y = v*math.sin(math.radians(self.theta))
         delta_theta = math.degrees((v/self.L)*math.tan(math.radians(alpha)))
-        print delta_theta
+        #print delta_theta
         self.update(delta_x,delta_y,delta_theta)
     def show(self,legend = "Path"):
         """Plot the path of the model"""

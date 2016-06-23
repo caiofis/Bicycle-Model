@@ -13,7 +13,7 @@ class Map(object):
         plt.imshow(self.pixels)#, interpolation='nearest')
         plt.axis([0,self.pixels[0].size,0,self.pixels.size/self.pixels[0].size])
         plt.gray()
-        plt.draw()
+        #plt.draw()
     def read(self,x,y):
         """Read the value of the pixel in the desired position"""
         return self.pixels[y][x]
