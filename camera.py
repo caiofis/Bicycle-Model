@@ -1,4 +1,3 @@
-import mapping
 import matplotlib.pyplot as plt
 import math
 
@@ -11,19 +10,23 @@ class Camera(object):
         self.H = H
         self.cam_angle= cam_angle
         self.error = 0
+        #Define the distance between the robot and the camera readLine
+        self.d_cam = self.H * math.tan(math.radians(self.cam_angle))
+        self.beta = math.degrees(math.atan(L/(2*self.d_cam)))
+        self.d_start = self.d_cam/math.cos(math.radians(self.beta))
     def loadMap(self,map):
         """Load a Map object into the camera"""
         self.map = map
 
     def readLine(self,pose,visualize = False):
         """Reads a line of the map based on the pose of the robot"""
-        #Define the distance between the robot and the camera readLine
-        d_cam = self.H * math.tan(math.radians(self.cam_angle))
         #Define the position of the first pixel
-        startx =  (pose[0] + d_cam*math.cos(math.radians(pose[2]))) + \
-         (self.L/2)*math.cos(math.radians(pose[2]+90))
-        starty =  (pose[1] + d_cam*math.sin(math.radians(pose[2]))) + \
-        (self.L/2)*math.sin(math.radians(pose[2]+90))
+#        startx =  (pose[0] + d_cam*math.cos(math.radians(pose[2]))) + \
+#         (self.L/2)*math.cos(math.radians((pose[2]+90)))
+#        starty =  (pose[1] + d_cam*math.sin((pose[2]))) + \
+#        (self.L/2)*math.sin(math.radians(pose[2]+90))
+        startx = (pose[0] + self.d_start*math.cos(math.radians(pose[2]+self.beta)))
+        starty = (pose[1] + self.d_start*math.sin(math.radians(pose[2]+self.beta)))
         x = []      #list of x positions of the pixels
         y = []      #list of y positions of the pixels
         reads = []  #value of the pixels
@@ -69,7 +72,6 @@ class Camera(object):
                 address = i
                 break
         for i in xrange(self.L/2,self.L-1,1):
-            a = 0
             if(read[i]<150):
                 address += i
                 break

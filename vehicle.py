@@ -9,9 +9,9 @@ class Vehicle(bicycle.Bicycle):
     def __init__(self, L = 1 ,alpha_max = 90):
         bicycle.Bicycle.__init__(self,L,alpha_max)
         self.odoState = False   #turn of odometry
-        self.odoVariance = 0    #set the standard deviantion of the odometry to
+        self.odoVariance = [0,0]    #set the standard deviantion of the odometry to
                                 # zero
-        self.sensors = [[],[]]  # inicialize a list of the sensors,
+        self.sensors = [[],[]]  # inicialize a list of the sensors reads,
                                 # sensors[0] = encoder
                                 # sensors[1] = steer angle
     def setOdometry(self,state):
@@ -20,12 +20,14 @@ class Vehicle(bicycle.Bicycle):
         must be set"""
         self.odoState = state
     def setOdometryVariance(self, variance):
-        """Set the valor of the standard deviantion of the odometry"""
+        """Set the valor of the standard deviantion of the odometry
+            It must be a list of two values [encoder,steer]"""
         self.odoVariance = variance
     def readSensors(self,v,alpha):
         """Append to the list the reads of the sensors (encoder and steer angle
     measurement)"""
-        v += random.gauss(0,self.odoVariance) # append the noise to the odometer
+        v += random.gauss(0,self.odoVariance[0]) # append the noise to the odometer
+        alpha += random.gauss(0,self.odoVariance[1])
         self.sensors[0].append(v)
         self.sensors[1].append(alpha)
     def Odometry(self,v,alpha):
@@ -41,5 +43,5 @@ class Vehicle(bicycle.Bicycle):
         self.Odometry(v,alpha)
     def clear(self):
         """Clear both the poses of the model and the sensors reads"""
-        bicycle.Bicycle.clear()
+        self.poses = [[],[],[]]
         self.sensors = [[],[]]  # clear list of the sensors

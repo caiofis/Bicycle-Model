@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-import math
 import bicycle
 import vehicle
 import camera
@@ -16,7 +14,7 @@ class Robot(vehicle.Vehicle):
     * The length of the camera in pixels (**cam_length**)"""
     def __init__(self,map_file, cam_length = 128, L = 0.2 ,alpha_max = 20,
                                 pxlpermeter = 370, H = 0.2, cam_angle = 30):
-        vehicle.Vehicle.__init__(self,L,alpha_max)      #create a vehicle
+        vehicle.Vehicle.__init__(self,L*pxlpermeter,alpha_max)      #create a vehicle
         self.pxlpermeter = pxlpermeter                  #scale the plot
         self.map = mapping.Map(map_file)                #create a map
         self.H = H*pxlpermeter                          #set the cam heigth
@@ -31,9 +29,9 @@ class Robot(vehicle.Vehicle):
         to the speed and scalling the angle as a **value** from -1 to 1, because
         the camera reads return a error in this range'''
         ###Value must be between -1 and 1
-        self.Odometry(v,value)        #Reads the odometry sensors
         alpha = value*self.alpha_max  #scale the value to the steer angle
-        v = v*self.pxlpermeter
+        self.Odometry(v,alpha)        #Reads the odometry sensors v in meters
+        v = v*self.pxlpermeter        # and steer in degrees
         bicycle.Bicycle.run(self,v,alpha)
     def show(self,legend = "Path"):
         """Show the image of the map and the poses of the robot"""
@@ -41,10 +39,10 @@ class Robot(vehicle.Vehicle):
         bicycle.Bicycle.show(self,legend)
     def pidControl(self,Kp = 2,Ki = 0, Kd = 0,v = 1,debug=True):
         """Aplly the PID control to the model"""
-        error = self.cam.findLine(self.getPose(),visualize=False)
+        error = self.cam.findLine(self.getPose(),visualize = debug)
         self.int_error += error
         delta_error = error - self.last_error
-        last_error = error
+        self.last_error = error
         alpha = Kp * error + Ki * self.int_error + Kd * delta_error
         self.run(v,alpha)
         if debug:
